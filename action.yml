@@ -1,0 +1,41 @@
+name: 'lean-package-validator'
+description: "An GitHub action that validates a micro-package for its leanness. A project/micro-package is considered `lean` when its common repository artifacts won't be included in the release assets."
+author: 'Raphael Stolt'
+
+branding:
+  icon: 'package'
+  color: 'green'
+
+inputs:
+  php-version:
+    description: 'The PHP version to run the lean-package-validator at e.g. 8.0.'
+    required: true
+    default: '8.0'
+  lpv-version:
+    description: 'The version of the lean-package-validator to install.'
+    required: true
+    default: '3.0.0'
+  glob-pattern:
+    description: "The Glob pattern describing artifact files to exclude from release assets e.g. '{.*,*.rst,*.py[cod],dist/}'."
+    required: false
+    default: 'use-lpv-file'
+  verbose:
+    description: 'Increase verbosity of the output messages.'
+    required: false
+    default: '-v'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: "${{inputs.php-version}}"
+
+    - name: Install lean package validator
+      run: wget https://github.com/raphaelstolt/lean-package-validator/releases/download/v${{inputs.lpv-version}}/lean-package-validator.phar && sudo mv lean-package-validator.phar /usr/bin/lpv && sudo chmod u+x /usr/bin/lpv
+      shell: bash
+
+    - name: Run the lean package validator
+      run: bin/lpv-runner.sh ${{inputs.verbose}} ${{inputs.glob-pattern}}
+      shell: bash
