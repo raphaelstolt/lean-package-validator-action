@@ -46,5 +46,5 @@ runs:
     - name: Run the lean package validator
       run: |
          chmod u+x bin/lpv-runner.php
-         ./bin/lpv-runner.php ${{inputs.verbose}} ${{inputs.glob-pattern}}
+         ./bin/lpv-runner.php --directory ${GITHUB_WORKSPACE} ${{inputs.verbose}} ${{inputs.glob-pattern}}
       shell: bash
