@@ -24,6 +24,7 @@ if ($argv[1] === '-v') {
 if ($argv[2] === "use-lpv-file") {
     echo 'Running ' . $lpvFileCommand . '.' . PHP_EOL;
     exec($lpvFileCommand, $output, $statusCode);
+    var_dump($output);
 } else {
     echo 'Running ' . $lpvGlobFileCommand . PHP_EOL;
     exec($lpvGlobFileCommand, $output, $statusCode);
