@@ -30,6 +30,7 @@ runs:
     - name: Checkout
       uses: actions/checkout@v4
       with:
+        repository: raphaelstolt/lean-package-validator-action
         sparse-checkout: |
           bin
 
