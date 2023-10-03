@@ -5,5 +5,5 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-## v1.0.0 - 2019-09-04
+## v0.1.0 - 2023-10-05
 - Initial release.
