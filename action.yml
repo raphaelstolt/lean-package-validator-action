@@ -43,5 +43,7 @@ runs:
       shell: bash
 
     - name: Run the lean package validator
-      run: bin/lpv-runner.sh ${{inputs.verbose}} ${{inputs.glob-pattern}}
+      run: |
+         chmod u+x bin/lpv-runner.php
+         ./bin/lpv-runner.php ${{inputs.verbose}} ${{inputs.glob-pattern}}
       shell: bash
