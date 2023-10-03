@@ -28,7 +28,10 @@ runs:
   using: "composite"
   steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+      with:
+        sparse-checkout: |
+          bin
 
     - name: Install PHP
       uses: shivammathur/setup-php@v2
@@ -36,7 +39,7 @@ runs:
         php-version: "${{inputs.php-version}}"
 
     - name: Install lean package validator
-      run: wget https://github.com/raphaelstolt/lean-package-validator/releases/download/v${{inputs.lpv-version}}/lean-package-validator.phar && sudo mv lean-package-validator.phar /usr/bin/lpv && sudo chmod u+x /usr/bin/lpv
+      run: wget --quiet https://github.com/raphaelstolt/lean-package-validator/releases/download/v${{inputs.lpv-version}}/lean-package-validator.phar && sudo mv lean-package-validator.phar /usr/bin/lpv && sudo chmod u+x /usr/bin/lpv
       shell: bash
 
     - name: Run the lean package validator
