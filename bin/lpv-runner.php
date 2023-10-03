@@ -9,11 +9,10 @@ $help = <<<HELP
 This command delegates the GitHub action to the lpv binary:
 
 Usage:
-  lpvrunner.php [-hv] [--help|--directory=<directory-to-scan>]
+  lpvrunner.php [-hv] [--help|--directory=<directory-to-scan>] verbose=false glob-pattern=use-lpv-file
 
 Options:
   --directory <directory>  The directory to scan
-  -v                       Increases the verbosity of messages
   -h, --help               Displays this help message
 
 HELP;
@@ -40,30 +39,16 @@ if (file_exists($directoryToScan) === false) {
     exit(1);
 }
 
-if (array_key_exists('v', $options)) {
-    $verbose = true;
-}
-
-if (count($argv) === 1) {
-    echo "Running lpv validate $directoryToScan." . PHP_EOL;
-    exec("lpv validate $directoryToScan", $output, $statusCode);
-    exit($statusCode);
-}
-
 $lpvCommand = "lpv validate $directoryToScan";
-if (isset($argv[3]) && $argv[3] !== "use-lpv-file") {
-    $lpvCommand = "lpv validate --glob-pattern " . $argv[3] . " $directoryToScan";
+
+if ($argv[3] == 'true') {
+    $lpvCommand = "lpv validate -v $directoryToScan";
 }
 
-if ($verbose) {
-    $lpvCommand = "lpv validate -v $directoryToScan";
-    if (isset($argv[3]) && $argv[3] !== "use-lpv-file") {
-        $lpvCommand = "lpv validate -v --glob-pattern " . $argv[3] . " $directoryToScan";
-    }
+if ($argv[4] !== 'use-lpv-file') {
+    $lpvCommand.= " --glob-pattern " . trim($argv[4]);
 }
 
 echo 'Running ' . $lpvCommand . '.' . PHP_EOL;
 exec($lpvCommand, $output, $statusCode);
-var_dump($output);
-
 exit($statusCode);

@@ -8,9 +8,9 @@ branding:
 
 inputs:
   php-version:
-    description: 'The PHP version to run the lean-package-validator at e.g. 8.0.'
+    description: 'The PHP version to run the lean-package-validator at e.g. 8.1.'
     required: true
-    default: '8.0'
+    default: '8.1'
   lpv-version:
     description: 'The version of the lean-package-validator to install.'
     required: true
@@ -22,7 +22,7 @@ inputs:
   verbose:
     description: 'Increase verbosity of the output messages.'
     required: false
-    default: '-v'
+    default: 'false'
 
 runs:
   using: "composite"
