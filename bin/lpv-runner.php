@@ -1,6 +1,8 @@
 #!/usr/bin/env php
+
 <?php
-exec("lpv --version", $output, $existenceStatusCode);
+
+exec("lpv --version 2> /dev/null", $output, $existenceStatusCode);
 
 $options = getopt('h', ['directory:', 'help']);
 $verbose = false;
@@ -23,7 +25,7 @@ if (array_key_exists('h', $options) || array_key_exists('help', $options)) {
 }
 
 if ($existenceStatusCode !== 0) {
-    echo 'The lpv binary is not available.';
+    echo 'The lpv binary is not available.' . PHP_EOL;
     exit(1);
 }
 
@@ -41,14 +43,23 @@ if (file_exists($directoryToScan) === false) {
 
 $lpvCommand = "lpv validate $directoryToScan";
 
-if ($argv[3] == 'true') {
+if (isset($argv[3]) && $argv[3] == 'true') {
     $lpvCommand = "lpv validate -v $directoryToScan";
 }
 
-if ($argv[4] !== 'use-lpv-file') {
+if (isset($argv[4]) && $argv[4] !== 'use-lpv-file') {
     $lpvCommand.= " --glob-pattern " . trim($argv[4]);
 }
 
 echo 'Running ' . $lpvCommand . '.' . PHP_EOL;
-exec($lpvCommand, $output, $statusCode);
+exec($lpvCommand . ' 2> /dev/null', $output, $statusCode);
+
+foreach ($output as $outputLine) {
+    echo $outputLine . PHP_EOL;
+}
+
+if ($statusCode !== 0) {
+    echo 'Running lpv failed.' . PHP_EOL;
+}
+
 exit($statusCode);
