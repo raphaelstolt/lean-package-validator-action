@@ -4,6 +4,11 @@
 
 exec("lpv --version 2> /dev/null", $output, $existenceStatusCode);
 
+if ($existenceStatusCode !== 0) {
+    echo 'The lpv binary is not available.' . PHP_EOL;
+    exit(1);
+}
+
 $options = getopt('h', ['directory:', 'help']);
 $verbose = false;
 
@@ -22,11 +27,6 @@ HELP;
 if (array_key_exists('h', $options) || array_key_exists('help', $options)) {
     echo $help;
     exit(0);
-}
-
-if ($existenceStatusCode !== 0) {
-    echo 'The lpv binary is not available.' . PHP_EOL;
-    exit(1);
 }
 
 if (!array_key_exists('directory', $options)) {
