@@ -21,7 +21,7 @@ under continuous integration.
                 uses: raphaelstolt/lean-package-validator-action@v<version>
                 with:
                     php-version: "${{ matrix.php }}"
-                    lpv-version: "3.0.0"
+                    lpv-version: "4.0.2"
 ```
 
 Check the Git repository's `.gitattribute` against a glob pattern e.g. for Python projects and have some more verbose
@@ -39,7 +39,7 @@ output.
                 uses: raphaelstolt/lean-package-validator-action@v<version>
                 with:
                     php-version: "${{ matrix.php }}"
-                    lpv-version: "3.0.0"
+                    lpv-version: "4.0.2"
                     glob-pattern: '{.*,*.rst,*.py[cod],dist/}'
                     verbose: true
 ```
