@@ -14,7 +14,7 @@ inputs:
   lpv-version:
     description: 'The version of the lean-package-validator to install.'
     required: true
-    default: '4.0.2'
+    default: '4.0.5'
   glob-pattern:
     description: "The Glob pattern describing artifact files to exclude from release assets e.g. '{.*,*.rst,*.py[cod],dist/}'."
     required: false
